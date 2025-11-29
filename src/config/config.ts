@@ -34,6 +34,7 @@ interface Config {
   rabbitmq: RabbitMQConfig;
   smtp: SmtpConfig;
   resetPasswordBaseUrl: string;
+  emailVerificationBaseUrl: string;
 }
 
 export const config: Config = {
@@ -62,6 +63,7 @@ export const config: Config = {
     from: process.env.SMTP_FROM || 'noreply@example.com',
   },
   resetPasswordBaseUrl: process.env.RESET_PASSWORD_BASE_URL || 'http://localhost:3000',
+  emailVerificationBaseUrl: process.env.EMAIL_VERIFICATION_BASE_URL || process.env.RESET_PASSWORD_BASE_URL || 'http://localhost:3000',
 };
 
 export default config;

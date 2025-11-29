@@ -27,6 +27,13 @@ interface SmtpConfig {
   from: string;
 }
 
+interface AuthConfig {
+  jwksUrl: string;
+  issuer: string;
+  audience: string;
+  jwksCacheTtl: number;
+}
+
 interface Config {
   port: number;
   nodeEnv: string;
@@ -35,6 +42,7 @@ interface Config {
   smtp: SmtpConfig;
   resetPasswordBaseUrl: string;
   emailVerificationBaseUrl: string;
+  auth: AuthConfig;
 }
 
 export const config: Config = {
@@ -64,6 +72,12 @@ export const config: Config = {
   },
   resetPasswordBaseUrl: process.env.RESET_PASSWORD_BASE_URL || 'http://localhost:3000',
   emailVerificationBaseUrl: process.env.EMAIL_VERIFICATION_BASE_URL || process.env.RESET_PASSWORD_BASE_URL || 'http://localhost:3000',
+  auth: {
+    jwksUrl: process.env.AUTH_JWKS_URL || 'http://user-service:3000/.well-known/jwks.json',
+    issuer: process.env.AUTH_ISSUER || 'http://user-service:3000',
+    audience: process.env.AUTH_AUDIENCE || 'backboard',
+    jwksCacheTtl: Number(process.env.AUTH_JWKS_CACHE_TTL) || 15 * 60 * 1000, // 15 minutes
+  },
 };
 
 export default config;
